@@ -11,6 +11,6 @@
 		var imgurl = $('img',html).attr('src');
 		$('#easy-watermark-url').val(imgurl);
 		tb_remove();
-		$('#easy-watermark-settings-form').append('<input type="hidden" name="easy-watermark-settings[old-manager]" value="1" />').submit();
+		$('#wp-easy-watermark-settings-form').append('<input type="hidden" name="wp-easy-watermark-settings[old-manager]" value="1" />').submit();
 	}
 }(jQuery))

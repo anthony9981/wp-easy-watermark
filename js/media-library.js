@@ -29,7 +29,7 @@
 			$('#easy-watermark-url').val(attachment.attributes.url);
 			$('#easy-watermark-mime').val(attachment.attributes.mime);
 			$('#easy-watermark-id').val(attachment.id);
-			$('#easy-watermark-settings-form').submit();
+			$('#wp-easy-watermark-settings-form').submit();
 		});
 
 		frame.open();

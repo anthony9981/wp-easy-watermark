@@ -2,13 +2,13 @@
 /**
  * @copyright:	Wojtek Szałkiewicz
  * @license:	GPLv2 or later
- * 
+ *
  * This class is a base class for wordpress plugins.
  * It's a part of package in which you found it.
  * See readme.txt for more information.
  */
 
-class EW_Pluggable
+class WP_EW_Pluggable
 {
 	/**
  	 * Adds wordpress action

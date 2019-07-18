@@ -4,7 +4,7 @@
  * @see readme.txt
  */
 
-class EW_Settings
+class WP_EW_Settings
 {
 	private $fonts = array(
 			'Arial.ttf' => 'Arial',
@@ -86,9 +86,9 @@ class EW_Settings
 		add_filter('plugin_row_meta', array($this, 'plugin_row_meta'), 10, 2);
 
 		$this->tabs = array(
-			'general' => __('General', 'easy-watermark'),
-			'image' => __('Image', 'easy-watermark'),
-			'text' => __('Text', 'easy-watermark'),
+			'general' => __('General', 'wp-easy-watermark'),
+			'image' => __('Image', 'wp-easy-watermark'),
+			'text' => __('Text', 'wp-easy-watermark'),
 		);
 
 		foreach($this->tabs as $name => $caption){
@@ -113,7 +113,7 @@ class EW_Settings
 	}
 
 	public function add_options_page(){
- 		$page_id = add_options_page(__('Easy Watermark', 'easy-watermark'), __('Easy Watermark', 'easy-watermark'), 'manage_options', 'easy-watermark-settings', array($this, 'settings_page'));
+ 		$page_id = add_options_page(__('Easy Watermark', 'wp-easy-watermark'), __('Easy Watermark', 'wp-easy-watermark'), 'manage_options', 'wp-easy-watermark-settings', array($this, 'settings_page'));
 
 		add_action('load-' . $page_id, array($this, 'add_help_tab'));
 	}
@@ -152,7 +152,7 @@ class EW_Settings
 
 	private function get_help_tab($name){
 		ob_start();
-		include EWVIEWS . EWDS . 'help_tab_placeholders_' . $name . '.php';
+		include WPEWVIEWS . WPEWDS . 'help_tab_placeholders_' . $name . '.php';
 		return ob_get_clean();
 	}
 
@@ -313,21 +313,21 @@ class EW_Settings
 	}
 
 	public function settings_page(){
-//		wp_enqueue_script('ew-colorpicker', plugin_dir_url(EWBASE . '/index.php') . 'js/colorpicker.js');
+//		wp_enqueue_script('ew-colorpicker', plugin_dir_url(WPEWBASE . '/index.php') . 'js/colorpicker.js');
 		wp_enqueue_script('iris');
-		wp_enqueue_script('easy-watermark', plugin_dir_url(EWBASE . '/index.php') . 'js/easy-watermark.js');
-		wp_enqueue_style('ew-style', plugin_dir_url(EWBASE . '/index.php') . 'css/style.css');
-		wp_enqueue_style('ew-cp-style', plugin_dir_url(EWBASE . '/index.php') . 'css/colorpicker.css');
+		wp_enqueue_script('easy-watermark', plugin_dir_url(WPEWBASE . '/index.php') . 'js/easy-watermark.js');
+		wp_enqueue_style('ew-style', plugin_dir_url(WPEWBASE . '/index.php') . 'css/style.css');
+		wp_enqueue_style('ew-cp-style', plugin_dir_url(WPEWBASE . '/index.php') . 'css/colorpicker.css');
 		if(function_exists('wp_enqueue_media')){
 			// load new media manager (since wp 3.5)
 			wp_enqueue_media();
-			wp_enqueue_script('ew-media-libraby', plugin_dir_url(EWBASE . '/index.php') . 'js/media-library.js');
+			wp_enqueue_script('ew-media-libraby', plugin_dir_url(WPEWBASE . '/index.php') . 'js/media-library.js');
 		}
 		else {
 			// load old-style thiskbox
 			wp_enqueue_script('thickbox');
 			wp_enqueue_style('thickbox');
-			wp_enqueue_script('ew-media-libraby', plugin_dir_url(EWBASE . '/index.php') . 'js/old-media-library.js');
+			wp_enqueue_script('ew-media-libraby', plugin_dir_url(WPEWBASE . '/index.php') . 'js/old-media-library.js');
 		}
 
 		$fonts = $this->fonts;
@@ -335,7 +335,7 @@ class EW_Settings
 		$current_tab = (isset($_GET['tab']) && array_key_exists($_GET['tab'], $this->tabs)) ? $_GET['tab'] : 'general';
 		extract($this->settings[$current_tab]);
 
-		include EWVIEWS . EWDS . 'settings-page.php';
+		include WPEWVIEWS . WPEWDS . 'settings-page.php';
 	}
 
 	/**
@@ -361,10 +361,10 @@ class EW_Settings
 		static $this_plugin;
 
 		if (!$this_plugin) {
-			$this_plugin = plugin_basename(EWBASE . EWDS . 'index.php');
+			$this_plugin = plugin_basename(WPEWBASE . WPEWDS . 'index.php');
 		}
 		if ($file == $this_plugin) {
-			$settings_link = '<a href="options-general.php?page=easy-watermark-settings">'.__('Settings').'</a>';
+			$settings_link = '<a href="options-general.php?page=wp-easy-watermark-settings">'.__('Settings').'</a>';
 			array_unshift($links, $settings_link);
 		}
 		return $links;
@@ -374,10 +374,10 @@ class EW_Settings
 		static $this_plugin;
 
 		if (!$this_plugin) {
-			$this_plugin = plugin_basename(EWBASE . EWDS . 'easy-watermark.php');
+			$this_plugin = plugin_basename(WPEWBASE . WPEWDS . 'easy-watermark.php');
 		}
 		if ($file == $this_plugin) {
-			$donate_link = '<a href="'.$this->donationLink.'">'.__('Donate', 'easy-watermark').'</a>';
+			$donate_link = '<a href="'.$this->donationLink.'">'.__('Donate', 'wp-easy-watermark').'</a>';
 			array_push($links, $donate_link);
 		}
 		return $links;

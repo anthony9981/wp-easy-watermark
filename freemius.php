@@ -10,14 +10,14 @@ function ew_fs() {
 
         $ew_fs = fs_dynamic_init( array(
             'id'                  => '2801',
-            'slug'                => 'easy-watermark',
+            'slug'                => 'wp-easy-watermark',
             'type'                => 'plugin',
             'public_key'          => 'pk_f13faf5a5fdb7e7b8bd3b78646f15',
             'is_premium'          => false,
             'has_addons'          => false,
             'has_paid_plans'      => false,
             'menu'                => array(
-                'slug'           => 'easy-watermark-settings',
+                'slug'           => 'wp-easy-watermark-settings',
                 'account'        => false,
                 'support'        => false,
                 'contact'        => false,

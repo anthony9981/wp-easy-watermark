@@ -8,7 +8,7 @@
 		var checked = $(this).attr('checked');
 		if(checked)
 			$('.auto-add-options').show();
-		else 
+		else
 			$('.auto-add-options').hide();
 	});
 
@@ -53,7 +53,7 @@
 		$('#easy-watermark-url').val('');
 		$('#easy-watermark-id').val('');
 		$('#easy-watermark-mime').val('');
-		$('#easy-watermark-settings-form').submit();
+		$('#wp-easy-watermark-settings-form').submit();
 	});
 
 	var picker = $('#colorselector');
@@ -92,7 +92,7 @@
 		}
 	});
 */
-	
+
 	$('#alignmentbox input').css('visibility', 'hidden');
 	$('#alignmentbox input:checked').each(function(){
 		$(this).parent().addClass('current');
@@ -105,7 +105,7 @@
 		}
 	});
 
-	if($('input[name=option_page]').val() == 'easy-watermark-settings-text'){
+	if($('input[name=option_page]').val() == 'wp-easy-watermark-settings-text'){
 
 		var refreshImage = function(color){
 			var row = $('#ew-preview-row');
@@ -132,11 +132,11 @@
 			}
 		}
 
-		$('#easy-watermark-settings-form input').focusout(refreshImage)
-		$('#easy-watermark-settings-form select').change(refreshImage);
+		$('#wp-easy-watermark-settings-form input').focusout(refreshImage)
+		$('#wp-easy-watermark-settings-form select').change(refreshImage);
 	}
 
-	if($('input[name=option_page]').val() == 'easy-watermark-settings-image'){
+	if($('input[name=option_page]').val() == 'wp-easy-watermark-settings-image'){
 		var row = $('#ew-scale-row');
 		var select = $('#ew-scale-mode');
 		var value = select.val();

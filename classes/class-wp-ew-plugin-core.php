@@ -8,17 +8,17 @@
  * See readme.txt for more information.
  */
 
-class EW_Plugin_Core extends EW_Pluggable
+class WP_EW_Plugin_Core extends WP_EW_Pluggable
 {
 	/**
 	 * @var string  plugin name
 	 */
-	protected static $pluginName = 'Easy Watermark';
+	protected static $pluginName = 'WP Easy Watermark';
 
 	/**
 	 * @var string  plugin slug used in setting names etc.
 	 */
-	protected static $pluginSlug = 'easy-watermark';
+	protected static $pluginSlug = 'wp-easy-watermark';
 
 	/**
 	 * @var string  plugin version
@@ -28,7 +28,7 @@ class EW_Plugin_Core extends EW_Pluggable
 	/**
 	 * @var string	plugin class name
 	 */
-	protected static $className = 'EW_Plugin';
+	protected static $className = 'WP_EW_Plugin';
 
 	/**
 	 * @var string  main plugin file

@@ -7,7 +7,7 @@
 /**
  * Main plugin class
  */
-class EW_Plugin extends EW_Plugin_Core
+class WP_EW_Plugin extends WP_EW_Plugin_Core
 {
 	/**
 	 * @var boolean
@@ -99,13 +99,13 @@ class EW_Plugin extends EW_Plugin_Core
 		$this->test_GD();
 
 		$this->ewErrors = array(
-			EasyWatermark::ERROR_SAME_IMAGE_PATHS			=> __('Same image and watermark paths.', 'easy-watermark'),
-			EasyWatermark::ERROR_NO_WATERMARK_SET			=> __('No watermark image or text specified.', 'easy-watermark'),
-			EasyWatermark::ERROR_NO_INPUT_IMAGE				=> __('No input image specified.', 'easy-watermark'),
-			EasyWatermark::ERROR_NOT_ALLOWED_TYPE			=> __('Not allowed image type.', 'easy-watermark'),
-			EasyWatermark::ERROR_NO_OUTPUT_FILE_SET			=> __('No output file specified.', 'easy-watermark'),
-			EasyWatermark::ERROR_NOT_ALLOWED_OUTPUT_TYPE	=> __('Not allowed output type.', 'easy-watermark'),
-			EasyWatermark::ERROR_UNKNOWN					=> __('Could not apply watermark.', 'easy-watermark')
+            WPEasyWatermark::ERROR_SAME_IMAGE_PATHS        => __('Same image and watermark paths.', 'wp-easy-watermark'),
+            WPEasyWatermark::ERROR_NO_WATERMARK_SET        => __('No watermark image or text specified.', 'wp-easy-watermark'),
+            WPEasyWatermark::ERROR_NO_INPUT_IMAGE          => __('No input image specified.', 'wp-easy-watermark'),
+            WPEasyWatermark::ERROR_NOT_ALLOWED_TYPE        => __('Not allowed image type.', 'wp-easy-watermark'),
+            WPEasyWatermark::ERROR_NO_OUTPUT_FILE_SET      => __('No output file specified.', 'wp-easy-watermark'),
+            WPEasyWatermark::ERROR_NOT_ALLOWED_OUTPUT_TYPE => __('Not allowed output type.', 'wp-easy-watermark'),
+            WPEasyWatermark::ERROR_UNKNOWN                 => __('Could not apply watermark.', 'wp-easy-watermark')
 		);
 
 		// Init Freemius.
@@ -155,12 +155,12 @@ class EW_Plugin extends EW_Plugin_Core
 	 * @return void
 	 */
 	public function plugin_init(){
-		new EW_Settings($this);
+		new WP_EW_Settings($this);
 	}
 
 	public function admin_init(){
 		if(isset($_GET['page'])){
-			if($_GET['page'] == 'easy-watermark-settings' && isset($_GET['tp']) && $_GET['tp'] == 1){
+			if($_GET['page'] == 'wp-easy-watermark-settings' && isset($_GET['tp']) && $_GET['tp'] == 1){
 				$this->print_text_preview();
 			}
 			elseif($_GET['page'] == 'easy-watermark' && isset($_GET['_wpnonce'])){
@@ -187,7 +187,7 @@ class EW_Plugin extends EW_Plugin_Core
 		if($this->settings['general']['watermark_type'] == '1'){
 			$settings = $this->getTextSettings();
 
-			$fontFile = EWBASE . EWDS . 'fonts' . EWDS . $settings['font'];
+			$fontFile = WPEWBASE . WPEWDS . 'fonts' . WPEWDS . $settings['font'];
 			if(file_exists($fontFile))
 				$settings['font'] = $fontFile;
 
@@ -208,7 +208,7 @@ class EW_Plugin extends EW_Plugin_Core
 			$ew->textSet('opacity', $_GET['opacity']);
 
 		if(isset($_GET['font'])){
-			$fontFile = EWBASE . EWDS . 'fonts' . EWDS . $_GET['font'];
+			$fontFile = WPEWBASE . WPEWDS . 'fonts' . WPEWDS . $_GET['font'];
 			if(file_exists($fontFile))
 				$ew->textSet('font', $fontFile);
 		}
@@ -269,32 +269,32 @@ class EW_Plugin extends EW_Plugin_Core
 	 */
 	public function admin_notices(){
 		if(isset($_GET['watermarked']) && $_GET['watermarked'] == '1'){
-			echo '<div class="updated"><p>'.__('Watermark successfully added.', 'easy-watermark').'</p></div>';
+			echo '<div class="updated"><p>'.__('Watermark successfully added.', 'wp-easy-watermark').'</p></div>';
 		}
 		elseif(isset($_GET['marked'])){
-			$marked = $_GET['marked'] == 1 ? __('watermarked', 'easy-watermark') : __('not watermarked', 'easy-watermark');
-			echo '<div class="updated"><p>'.sprintf(__('An Image has been marked as %s.', 'easy-watermark'), $marked).'</p></div>';
+			$marked = $_GET['marked'] == 1 ? __('watermarked', 'wp-easy-watermark') : __('not watermarked', 'wp-easy-watermark');
+			echo '<div class="updated"><p>'.sprintf(__('An Image has been marked as %s.', 'wp-easy-watermark'), $marked).'</p></div>';
 		}
 		elseif(isset($_GET['ew_error'])){
 			echo '<div class="error"><p>';
 			switch($_GET['ew_error']):
 				case '1':
-					_e('Invalid mime type.', 'easy-watermark');
+					_e('Invalid mime type.', 'wp-easy-watermark');
 					break;
 				case '2':
-					_e('No watermark image selected and no watermark text set.', 'easy-watermark');
-					echo ' <a href="'.admin_url('options-general.php?page=easy-watermark-settings').'">';
-					_e('Go to settings page', 'easy-watermark');
+					_e('No watermark image selected and no watermark text set.', 'wp-easy-watermark');
+					echo ' <a href="'.admin_url('options-general.php?page=wp-easy-watermark-settings').'">';
+					_e('Go to settings page', 'wp-easy-watermark');
 					echo '</a>';
 					break;
 				default:
-					_e('An error has occurred.', 'easy-watermark');
+					_e('An error has occurred.', 'wp-easy-watermark');
 			endswitch;
 			echo '</p></div>';
 		}
 
 		if(!self::isGDEnabled() && get_current_screen()->id == 'plugins'){
-			echo '<div class="error"><p>'.__('Easy Watermark is active, but requires GD library to work. Please enable this extension.', 'easy-watermark').' <a href="http://www.php.net/manual/en/image.setup.php" target="_blank">'.__('Read more', 'easy-watermark').'</p></div>';
+			echo '<div class="error"><p>'.__('Easy Watermark is active, but requires GD library to work. Please enable this extension.', 'wp-easy-watermark').' <a href="http://www.php.net/manual/en/image.setup.php" target="_blank">'.__('Read more', 'wp-easy-watermark').'</p></div>';
 		}
 
 		foreach($this->notices as $msg){
@@ -322,7 +322,7 @@ class EW_Plugin extends EW_Plugin_Core
 	function add_bulk_action_script() {
 		$roles = $this->settings['general']['allowed_roles'];
 		if($this->isGDEnabled() && $this->checkRolePermission()){
-			$text = __('Add Watermark', 'easy-watermark');
+			$text = __('Add Watermark', 'wp-easy-watermark');
 			echo <<<EOD
 		<script type="text/javascript">
 			jQuery(document).ready(function() {
@@ -349,7 +349,7 @@ EOD;
 
 
 			// Add link if it's supported image type
-			$actions['add_watermark'] = '<a href="' . wp_nonce_url(admin_url('upload.php?page=easy-watermark&attachment_id='.$post->ID.'&r=library'), 'ew_add_watermark') . '">'.__('Add Watermark', 'easy-watermark').'</a>';
+			$actions['add_watermark'] = '<a href="' . wp_nonce_url(admin_url('upload.php?page=easy-watermark&attachment_id='.$post->ID.'&r=library'), 'ew_add_watermark') . '">'.__('Add Watermark', 'wp-easy-watermark').'</a>';
 		}
 
 		return $actions;
@@ -365,7 +365,7 @@ EOD;
 			// Add link if it's supported image type
 			$form_fields = array_reverse($form_fields);
 			$form_fields['easy-watermark'] = array(
-				'label' => '<a href="'.wp_nonce_url(admin_url('upload.php?page=easy-watermark&attachment_id='.$post->ID.'&r=post'), 'ew_add_watermark').'" class="button-secondary">'.__('Add watermark', 'easy-watermark').'</a>',
+				'label' => '<a href="'.wp_nonce_url(admin_url('upload.php?page=easy-watermark&attachment_id='.$post->ID.'&r=post'), 'ew_add_watermark').'" class="button-secondary">'.__('Add watermark', 'wp-easy-watermark').'</a>',
 				'input' => 'html',
 				'html' => ' '
 			);
@@ -540,18 +540,18 @@ EOD;
 				$filepath = get_attached_file($img->ID);
 				if(!current_user_can('edit_others_posts') && wp_get_current_user()->ID != $img->post_author){
 					// No permission to edit this image
-					$output .= sprintf(__('No permission to edit file %s. Skipping...', 'easy-watermark'), '<strong>'.$filepath.'</strong>').'<br/>';
+					$output .= sprintf(__('No permission to edit file %s. Skipping...', 'wp-easy-watermark'), '<strong>'.$filepath.'</strong>').'<br/>';
 					$skipped++;
 					continue;
 				}
 				if(!in_array($img->post_mime_type, $this->allowedMime)){
-					$output .= sprintf(__('Not supported mime type of %s. Skipping...', 'easy-watermark'), '<strong>'.$filepath.'</strong>').'<br/>';
+					$output .= sprintf(__('Not supported mime type of %s. Skipping...', 'wp-easy-watermark'), '<strong>'.$filepath.'</strong>').'<br/>';
 					$skipped++;
 					continue;
 				}
 
 				if($this->create_watermark($img)){
-					$output .= sprintf(__('Watermark successfully added to %s', 'easy-watermark'), '<strong>'.$filepath.'</strong>') . '<br/>';
+					$output .= sprintf(__('Watermark successfully added to %s', 'wp-easy-watermark'), '<strong>'.$filepath.'</strong>') . '<br/>';
 				}
 			}
 		}
@@ -644,7 +644,7 @@ EOD;
 
 		$subdir = str_replace(array($uploads, $filename), '', $filepath);
 
-		$backup_dir = WP_CONTENT_DIR . EWDS . 'ew_backup' . $subdir;
+		$backup_dir = WP_CONTENT_DIR . WPEWDS . 'ew_backup' . $subdir;
 		$new_file = $backup_dir . $filename;
 
 		if(!file_exists($new_file)){
@@ -692,7 +692,7 @@ EOD;
 			if(!$ew->create() || !$ew->saveOutput()){
 				$error = $this->ewErrors[$ew->getError()];
 				if($this->isBulkAction){
-					$error = sprintf(__("Error: '%s', file: %s", 'easy-watermark'), $error, $imageFile);
+					$error = sprintf(__("Error: '%s', file: %s", 'wp-easy-watermark'), $error, $imageFile);
 				}
 				$this->add_error($error);
 				return false;
@@ -716,13 +716,13 @@ EOD;
 	 * @return object
 	 */
 	public function getEasyWatermark(){
-		if(!($this->ew instanceof EasyWatermark) && $this->isGDEnabled()){
+		if(!($this->ew instanceof WPEasyWatermark) && $this->isGDEnabled()){
 			$imageSettings = $this->settings['image'];
 			$textSettings = $this->getTextSettings();
-			$this->ew = new EasyWatermark();
+			$this->ew = new WPEasyWatermark();
 			$this->ew->setJpegQuality($this->settings['general']['jpg_quality']);
 
-			$fontFile = EWBASE . EWDS . 'fonts' . EWDS . $textSettings['font'];
+			$fontFile = WPEWBASE . WPEWDS . 'fonts' . WPEWDS . $textSettings['font'];
 			if(file_exists($fontFile))
 				$textSettings['font'] = $fontFile;
 
@@ -750,7 +750,7 @@ EOD;
 			global $wpdb, $wp_scripts;
 
 			wp_enqueue_style('ew-tools', plugins_url() . '/easy-watermark/css/tools.css');
-			wp_register_script('ewajax', plugin_dir_url(EWBASE . '/index.php') . 'js/ewajax.js', array('jquery', 'jquery-ui-progressbar'));
+			wp_register_script('ewajax', plugin_dir_url(WPEWBASE . '/index.php') . 'js/ewajax.js', array('jquery', 'jquery-ui-progressbar'));
 
 			wp_enqueue_style('jquery-ui', 'http://ajax.googleapis.com/ajax/libs/jqueryui/' . $wp_scripts->registered['jquery-ui-core']->ver . '/themes/smoothness/jquery-ui.css');
 
@@ -766,10 +766,10 @@ EOD;
 					'nonce' => wp_create_nonce('watermark_all_confirmed'),
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
 					'total_items' => $count,
-					'complete' => __('Complete!', 'easy-watermark')
+					'complete' => __('Complete!', 'wp-easy-watermark')
 				));
 
-				wp_enqueue_script('watermark-all', plugin_dir_url(EWBASE . '/index.php') . 'js/watermark-all.js', array('ewajax'));
+				wp_enqueue_script('watermark-all', plugin_dir_url(WPEWBASE . '/index.php') . 'js/watermark-all.js', array('ewajax'));
 
 				update_option('ew-bulk-total', $count);
 
@@ -783,10 +783,10 @@ EOD;
 					'nonce' => wp_create_nonce('restore_all_confirmed'),
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
 					'total_items' => $count,
-					'complete' => __('Complete!', 'easy-watermark')
+					'complete' => __('Complete!', 'wp-easy-watermark')
 				));
 
-				wp_enqueue_script('restore-all', plugin_dir_url(EWBASE . '/index.php') . 'js/restore-all.js', array('ewajax'));
+				wp_enqueue_script('restore-all', plugin_dir_url(WPEWBASE . '/index.php') . 'js/restore-all.js', array('ewajax'));
 
 				update_option('ew-bulk-total', $count);
 
@@ -794,7 +794,7 @@ EOD;
 			}
 		}
 
-		include EWVIEWS . EWDS . 'easy-watermark-page.php';
+		include WPEWVIEWS . WPEWDS . 'easy-watermark-page.php';
 	}
 
 	/**
@@ -920,7 +920,7 @@ echo '<style type="text/css" media="screen">
 			throw new Exception($metadata->get_error_message());
         }
 		if(empty($metadata)) {
-			throw new Exception(__('Unknown failure reason.', 'easy-watermark'));
+			throw new Exception(__('Unknown failure reason.', 'wp-easy-watermark'));
         }
 		wp_update_attachment_metadata($id, $metadata);
 
@@ -976,15 +976,15 @@ echo '<style type="text/css" media="screen">
 			$watermarked = get_post_meta($post_id, '_ew_watermarked', true);
 			$backup_file = get_post_meta($post_id, '_ew_backup_file', null);
 
-			$status = $watermarked == '1' ? __('watermarked', 'easy-watermark') : __('not watermarked', 'easy-watermark');
-			echo __('Status', 'easy-watermark') . ': <strong>' . $status . '</strong><br/>';
+			$status = $watermarked == '1' ? __('watermarked', 'wp-easy-watermark') : __('not watermarked', 'wp-easy-watermark');
+			echo __('Status', 'wp-easy-watermark') . ': <strong>' . $status . '</strong><br/>';
 
 			global $post;
 			if(current_user_can('edit_others_posts') || $post->post_author == wp_get_current_user()->ID){
 				$mark = $watermarked == '1' ? '0' : '1';
 
 				$link_text = $watermarked == '1' ?
-					__('mark as not watermarked', 'easy-watermark') : __('mark as watermarked', 'easy-watermark');
+					__('mark as not watermarked', 'wp-easy-watermark') : __('mark as watermarked', 'wp-easy-watermark');
 
 				if($page == 'post'){
 					$class = ' class="button-secondary"';
@@ -993,18 +993,18 @@ echo '<style type="text/css" media="screen">
 					$class = null;
 				}
 
-				echo '<a href="'.wp_nonce_url(admin_url('upload.php?page=easy-watermark&attachment_id='.$post_id.'&r='.$page.'&mark='.$mark), 'ew_mark').'">' . $link_text . '</a><br/><br/><p><strong><a href="' . wp_nonce_url(admin_url('upload.php?page=easy-watermark&attachment_id='.$post_id.'&r='.$page), 'ew_add_watermark') . '"'.$class.'>'.__('Add Watermark', 'easy-watermark').'</a></strong></p>';
+				echo '<a href="'.wp_nonce_url(admin_url('upload.php?page=easy-watermark&attachment_id='.$post_id.'&r='.$page.'&mark='.$mark), 'ew_mark').'">' . $link_text . '</a><br/><br/><p><strong><a href="' . wp_nonce_url(admin_url('upload.php?page=easy-watermark&attachment_id='.$post_id.'&r='.$page), 'ew_add_watermark') . '"'.$class.'>'.__('Add Watermark', 'wp-easy-watermark').'</a></strong></p>';
 
 				if(!empty($backup_file)){
 					// We can restore original image
 
-				echo '<p><a href="' . wp_nonce_url(admin_url('upload.php?page=easy-watermark&attachment_id='.$post_id.'&r='.$page), 'ew_restore') . '"'.$class.'>'.__('Restore original image', 'easy-watermark').'</a></p>';
+				echo '<p><a href="' . wp_nonce_url(admin_url('upload.php?page=easy-watermark&attachment_id='.$post_id.'&r='.$page), 'ew_restore') . '"'.$class.'>'.__('Restore original image', 'wp-easy-watermark').'</a></p>';
 				}
 			}
 		}
 
 		else {
-			echo __('This image is used as watermark.', 'easy-watermark') . '<br/><a href="'.admin_url('options-general.php?page=easy-watermark-settings&tab=image').'">' . __('Change settings', 'easy-watermark') . '</a>';
+			echo __('This image is used as watermark.', 'wp-easy-watermark') . '<br/><a href="'.admin_url('options-general.php?page=wp-easy-watermark-settings&tab=image').'">' . __('Change settings', 'wp-easy-watermark') . '</a>';
 
 		}
 	}
@@ -1019,7 +1019,7 @@ echo '<style type="text/css" media="screen">
 		if($version)
 			return; // Do nothing, the plugin has been installed before
 
-		$settings = EW_Settings::getDefaults();
+		$settings = WP_EW_Settings::getDefaults();
 
 		self::update_settings($settings);
 	}
@@ -1043,7 +1043,7 @@ echo '<style type="text/css" media="screen">
 	 * @return void
 	 */
 	public static function uninstall(){
-		$settings = EW_Settings::getDefaults();
+		$settings = WP_EW_Settings::getDefaults();
 
 		foreach($settings as $sectionName => $section){
 			delete_option(self::$pluginSlug.'-settings-'.$sectionName);
@@ -1059,7 +1059,7 @@ echo '<style type="text/css" media="screen">
 	 * @return void
 	 */
 	protected static function upgrade($version){
-		$defaults = EW_Settings::getDefaults();
+		$defaults = WP_EW_Settings::getDefaults();
 
 		if(version_compare($version, '0.1.1', '>')){
 			$settings['general'] = get_option(self::$pluginSlug.'-settings-general');

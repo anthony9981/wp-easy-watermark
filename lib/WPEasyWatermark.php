@@ -32,7 +32,7 @@
  * You can also specify output format, and save it as file using saveOutput method.
  */
 
-class EasyWatermark
+class WPEasyWatermark
 {
 	// Error codes
 	const ERROR_SAME_IMAGE_PATHS		= 1,
@@ -334,7 +334,7 @@ class EasyWatermark
 		if(!isset($this->defaultSettings[$section]))
 			return false;
 
-		$settings = isset($this->settings[$section]) ? 
+		$settings = isset($this->settings[$section]) ?
 				array_merge($this->defaultSettings[$section], $this->settings[$section]) :
 				$this->defaultSettings[$section];
 
@@ -583,7 +583,7 @@ class EasyWatermark
 
 		// Prepare params for copying function
 		$params = array($this->outputImage, $this->watermarkImage,
-			$offsetX, $offsetY,   
+			$offsetX, $offsetY,
 			0, 0,
 			$watermarkWidth, $watermarkHeight
 		);
@@ -802,7 +802,7 @@ class EasyWatermark
 	}
 
 	/**
-	 * Computes offset 
+	 * Computes offset
 	 *
 	 * @param  numeric  position (1 - left/top, 2 - center/middle, 3 - right/bottom)
 	 * @param  numeric  offset
@@ -902,7 +902,7 @@ class EasyWatermark
 			header('Content-Type: image/'.$type);
 
 		$params = array(
-			$this->outputImage, 
+			$this->outputImage,
 			$output
 		);
 
