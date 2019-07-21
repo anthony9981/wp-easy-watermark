@@ -206,6 +206,12 @@ class WP_EW_Plugin extends WP_EW_Plugin_Core
 			$ew->textSet('color', $_GET['color']);
 		if(isset($_GET['opacity']))
 			$ew->textSet('opacity', $_GET['opacity']);
+		if(isset($_GET['bg_color']))
+			$ew->textSet('bg_color', $_GET['bg_color']);
+		if(isset($_GET['bg_padding']))
+			$ew->textSet('bg_padding', $_GET['bg_padding']);
+		if(isset($_GET['bg_opacity']))
+			$ew->textSet('bg_opacity', $_GET['bg_opacity']);
 
 		if(isset($_GET['font'])){
 			$fontFile = WPEWBASE . WPEWDS . 'fonts' . WPEWDS . $_GET['font'];

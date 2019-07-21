@@ -59,6 +59,27 @@
 					<input type="text" size="3" name="wp-easy-watermark-settings-text[opacity]" id="ew-opacity" value="<?php echo $opacity; ?>" /> %
 				</td>
 				</tr>
+                <?php
+                    $c = rgbToHsl($bg_color);
+                    if($c[2] < 0.5) $bg_textcolor = 'white';
+                    else $bg_textcolor = 'black';
+                ?>
+                <tr><th scope="row"><?php _e('Background color', 'wp-easy-watermark'); ?></th><td>
+                        <input style="background-color:<?php echo $bg_color; ?>;color:<?php echo $bg_textcolor; ?>" type="text" maxlength="7" size="7" name="wp-easy-watermark-settings-text[bg_color]" id="ew-text-bg-color" value="<?php echo $bg_color; ?>" />
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><?php _e('Background padding', 'wp-easy-watermark'); ?></th>
+                    <td>
+                        <input type="text" size="3" name="wp-easy-watermark-settings-text[bg_padding]" id="ew-bg-padding" value="<?php echo $bg_padding; ?>" /> px
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><?php _e('Background opacity', 'wp-easy-watermark'); ?></th>
+                    <td>
+                        <input type="text" size="3" name="wp-easy-watermark-settings-text[bg_opacity]" id="ew-bg-opacity" value="<?php echo $bg_opacity; ?>" /> %
+                    </td>
+                </tr>
 			</table>
 
 <?php function rgbToHsl($r, $g = null, $b = null){

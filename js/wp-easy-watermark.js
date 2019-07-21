@@ -58,6 +58,7 @@
 
 	var picker = $('#colorselector');
 	var input = $('#ew-color');
+	var bg_input = $('#ew-text-bg-color');
 	var chenged = false;
 	/**
 	 * Using built-in Iris
@@ -73,6 +74,23 @@
 			}
 			else {
 				input.css('color', 'black');
+			}
+
+			refreshImage(color);
+		}
+	});
+
+	bg_input.iris({
+		palettes: true,
+		hide: false,
+		change: function(e, ui){
+			var color = ui.color.toString();
+			bg_input.css('background-color', color);
+			if(ui.color.l() < 50){
+				bg_input.css('color', 'white');
+			}
+			else {
+				bg_input.css('color', 'black');
 			}
 
 			refreshImage(color);
@@ -118,11 +136,17 @@
 				var angle = $('#ew-angle').val();
 				var opacity = $('#ew-opacity').val();
 
+				var bg_color = $('#ew-text-bg-color').val();
+				var bg_padding = $('#ew-bg-padding').val();
+				var bg_opacity = $('#ew-bg-opacity').val();
+
 				if(typeof color != 'string'){
 					color = $('#ew-color').val();
 				}
 
 				var params = '&tp=1&text='+encodeURIComponent(text)+'&font='+font+'&color='+encodeURIComponent(color)+'&size='+size+'&angle='+angle+'&opacity='+opacity;
+				params += '&bgcolor='+encodeURIComponent(bg_color)+'&bgpadding='+bg_padding+'&bgopacity='+bg_opacity;
+
 				var url = window.location + params;
 
 				$('#ew-text-preview').attr('src', url);

@@ -67,7 +67,10 @@ class WPEasyWatermark
 				'font' => '',
 				'size' => 24,
 				'angle' => 0,
-				'text' => ''
+				'text' => '',
+                'bg_color'=>'',
+                'bg_padding' => 0,
+                'bg_opacity' => 60
 			)
 		);
 
@@ -616,9 +619,10 @@ class WPEasyWatermark
 			return false;
 
 		$settings = $this->parseSettings('text');
-
 		list($textWidth, $textHeight, $deltaX, $deltaY) = $this->getTextSize($settings['size'], $settings['angle'], $settings['font'], $this->text);
 		list($imageWidth, $imageHeight) = $this->getImageSize();
+        // Add background padding
+        $bg_padding = (int) $settings['bg_padding'];
 
 		$color = $settings['color'];
 		$color = imagecolorallocatealpha($this->outputImage,
@@ -633,10 +637,32 @@ class WPEasyWatermark
 		$offsetY = $this->computeOffset($settings['position_y'], $settings['offset_y'],
 						$imageHeight, $textHeight, $settings['offset_y_pc']);
 
+		$x = $offsetX - $deltaX;
+		$y = $offsetY - $deltaY;
+        if ($bg_padding > 0) {
+            $y = $y - $bg_padding;
+        }
+
+        if ($y < 0 && $bg_padding > 0) {
+            $y = $bg_padding;
+        }
+        $bg_color = $settings['bg_color'];
+        $bgColor = imagecolorallocatealpha($this->outputImage,
+            hexdec(substr($bg_color, 0, 2)),
+            hexdec(substr($bg_color, 2, 2)),
+            hexdec(substr($bg_color, 4, 2)),
+            127 * (100 - $settings['bg_opacity']) / 100);
+        // Default background height 1%
+        $bgHeight = $textHeight + ($bg_padding * 2);
+        if ($bgHeight < 40) {
+            $bgHeight = 40;
+        }
+
+        imagefilledrectangle($this->outputImage, 0, $imageHeight - $bgHeight, $imageWidth, $imageHeight, $bgColor);
 		imagettftext($this->outputImage,
 			$settings['size'],
 			$settings['angle'],
-			$offsetX - $deltaX, $offsetY - $deltaY,
+			$x, $y,
 			$color,
 			$settings['font'],
 			$this->text);
@@ -652,7 +678,12 @@ class WPEasyWatermark
 	public function printTextPreview(){
 		$settings = $this->settings['text'];
 		list($width, $height, $deltaX, $deltaY) = $this->getTextSize($settings['size'], $settings['angle'], $settings['font'], $this->text);
-
+        // Add background padding
+        $bg_padding = (int) $settings['bg_padding'];
+        if ($bg_padding > 0) {
+            //$width += $bg_padding;
+            $height += $bg_padding * 2;
+        }
 		$this->outputImage = imagecreatetruecolor($width, $height);
 
 		if($this->outputImage){

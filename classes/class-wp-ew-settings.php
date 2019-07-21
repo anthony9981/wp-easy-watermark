@@ -59,7 +59,10 @@ class WP_EW_Settings
 			'font' => 'Arial.ttf',
 			'size' => 24,
 			'angle' => 0,
-			'text' => ''
+			'text' => '',
+            'bg_color' => '',
+            'bg_padding' => 0,
+            'bg_opacity' => 60
 		)
 	);
 
@@ -113,7 +116,7 @@ class WP_EW_Settings
 	}
 
 	public function add_options_page(){
- 		$page_id = add_options_page(__('Easy Watermark', 'wp-easy-watermark'), __('Easy Watermark', 'wp-easy-watermark'), 'manage_options', 'wp-easy-watermark-settings', array($this, 'settings_page'));
+ 		$page_id = add_options_page(__('WP Easy Watermark', 'wp-easy-watermark'), __('WP Easy Watermark', 'wp-easy-watermark'), 'manage_options', 'wp-easy-watermark-settings', array($this, 'settings_page'));
 
 		add_action('load-' . $page_id, array($this, 'add_help_tab'));
 	}
@@ -315,7 +318,7 @@ class WP_EW_Settings
 	public function settings_page(){
 //		wp_enqueue_script('ew-colorpicker', plugin_dir_url(WPEWBASE . '/index.php') . 'js/colorpicker.js');
 		wp_enqueue_script('iris');
-		wp_enqueue_script('easy-watermark', plugin_dir_url(WPEWBASE . '/index.php') . 'js/easy-watermark.js');
+		wp_enqueue_script('wp-easy-watermark', plugin_dir_url(WPEWBASE . '/index.php') . 'js/wp-easy-watermark.js');
 		wp_enqueue_style('ew-style', plugin_dir_url(WPEWBASE . '/index.php') . 'css/style.css');
 		wp_enqueue_style('ew-cp-style', plugin_dir_url(WPEWBASE . '/index.php') . 'css/colorpicker.css');
 		if(function_exists('wp_enqueue_media')){
@@ -327,7 +330,7 @@ class WP_EW_Settings
 			// load old-style thiskbox
 			wp_enqueue_script('thickbox');
 			wp_enqueue_style('thickbox');
-			wp_enqueue_script('ew-media-libraby', plugin_dir_url(WPEWBASE . '/index.php') . 'js/old-media-library.js');
+			wp_enqueue_script('ew-media-library', plugin_dir_url(WPEWBASE . '/index.php') . 'js/old-media-library.js');
 		}
 
 		$fonts = $this->fonts;

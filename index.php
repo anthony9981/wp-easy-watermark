@@ -2,7 +2,7 @@
 /*
 Plugin Name:	WP Easy Watermark
 Description:	An update and keep maintain version from Easy Watermark
-Version:		0.1
+Version:		1.0.0
 Author:		BracketSpace
 Author URI:	https://vietnamtutor.com/
 License:		GPLv2 or later
