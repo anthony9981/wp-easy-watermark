@@ -17,6 +17,7 @@ class WP_EW_Settings
 			'Times_New_Roman.ttf' => 'Times New Roman',
 			'Trebuchet_MS.ttf' => 'Trebuchet MS',
 			'Verdana.ttf' => 'Verdana',
+            'NotoSans.ttf' => 'NotoSans'
 	);
 
 	private static $defaults = array(

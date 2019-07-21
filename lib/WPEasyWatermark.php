@@ -417,6 +417,17 @@ class WPEasyWatermark
 			}
 		}
 
+        if(isset($settings['bg_color'])){
+            if(strpos($settings['bg_color'], '#') === 0){
+                $settings['bg_color'] = substr($settings['bg_color'], 1);
+            }
+            if(strlen($settings['bg_color']) == 3){
+                $settings['bg_color'] = $settings['bg_color'][0].$settings['bg_color'][0].
+                                     $settings['bg_color'][1].$settings['bg_color'][1].
+                                     $settings['bg_color'][2].$settings['bg_color'][2];
+            }
+        }
+
 		return $settings;
 	}
 
